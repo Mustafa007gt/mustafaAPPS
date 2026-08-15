@@ -1,565 +1,1366 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>مصطفى جيمرز - التطبيقات</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    * {
-      box-sizing: border-box;
-    }
 
-    body {
-      margin: 0;
-      font-family: 'Cairo', sans-serif;
-      background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #1f1f1f);
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
-      color: #fff;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+<title>مصطفى جيمرز</title>
 
-    header {
-      background-color: #000000aa;
-      padding: 15px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 999;
-      box-shadow: 0 2px 10px #00f7ff80;
-      backdrop-filter: blur(8px);
-    }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    header h1 {
-      margin: 0;
-      font-size: 1.8em;
-      color: #fff;
-      text-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
-    #searchInput {
-      padding: 8px 12px; 
-      font-size: 14px; 
-      border-radius: 8px; 
-      border: 2px solid #00f7ff30; 
-      outline: none;
-      background-color: #121212;
-      color: #fff;
-      font-family: 'Cairo', sans-serif;
-      transition: 0.3s;
-    }
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-    #searchInput:focus {
-      border-color: #00f7ff;
-      box-shadow: 0 0 10px #00f7ff50;
-    }
+<style>
 
-    /* حاوية أزرار التصنيفات النيونية المخصصة للتطبيقات */
+*{
+box-sizing:border-box;
+}
 
-        .apps-container {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;
-      padding: 15px; max-width: 1200px; margin: 0 auto;
-    }
+:root{
+--cyan:#00eaff;
+--purple:#a855f7;
+--bg:#07070d;
+--line:rgba(255,255,255,.08);
+}
 
-        .app-card {
-      background: #121212dd; border-radius: 16px; padding: 10px; text-align: center;
-      box-shadow: 0 0 20px #00f7ff30; transition: transform .3s, box-shadow .3s;
-      position: relative; overflow: hidden;
-    }
+html{
+scroll-behavior:smooth;
+}
 
-    .app-card.hidden {
-      display: none !important;
-    }
+body{
+margin:0;
+font-family:'Cairo',sans-serif;
+color:#fff;
 
-    .app-card:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 25px #00f7ff80;
-    }
+background:
+radial-gradient(circle at 15% 10%,rgba(0,234,255,.10),transparent 28%),
+radial-gradient(circle at 85% 20%,rgba(168,85,247,.13),transparent 30%),
+linear-gradient(145deg,#050509,#0c0b16 48%,#06060a);
 
-        .app-card img {
-      width: 100%; height: 140px; object-fit: cover; border-radius: 10px;
-      margin-bottom: 15px; transition: transform .4s ease; border: 1px solid #00f7ff20;
-    }
+min-height:100vh;
+overflow-x:hidden;
+}
 
-    .app-card:hover img {
-      transform: scale(1.04);
-    }
-    .app-card h2 {
-      color: #00f7ff;
-      text-shadow: 0 0 5px #00f7ff;
-      margin: 10px 0 5px 0;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      cursor: pointer;
-      position: relative;
-    }
+body::before{
+content:"";
+position:fixed;
+inset:0;
+pointer-events:none;
+opacity:.20;
 
-    .app-card h2:active {
-      overflow: visible;
-      white-space: nowrap;
-      z-index: 20;
-    }
+background-image:
+linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
 
-    /* نظام النجمات المضيئة المعزولة للتطبيقات */
+background-size:42px 42px;
+}
 
-    .rating-stars span:hover {
-      transform: scale(1.2);
-    }
 
-    /* حاوية الأزرار السفلى المحدثة لزر التحميل الكامل */
-    .card-actions {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 10px;
-      width: 100%;
-    }
+/* =========================
+   HEADER
+========================= */
 
-    /* تأثيرات أزرار التحميل الكاملة RGB النيونية */
-    .download-btn {
-      position: relative;
-      display: inline-block;
-      padding: 12px 24px;
-      color: #fff;
-      font-weight: bold;
-      text-decoration: none;
-      border-radius: 12px;
-      overflow: hidden;
-      background: linear-gradient(270deg, #ff00f7, #00f7ff, #00ff88, #fffb00);
-      background-size: 600% 600%;
-      animation: rgb-glow 8s ease infinite;
-      box-shadow: 0 0 15px #00f7ff88;
-      transition: transform 0.2s, box-shadow 0.2s;
-      cursor: pointer;
-      font-family: 'Cairo', sans-serif;
-      font-size: 16px;
-      width: 100%; /* تمدد كامل بعد حذف أيقونة اليوتيوب */
-      border: none;
-      outline: none;
-      text-align: center;
-    }
+header{
+position:sticky;
+top:0;
+z-index:999;
 
-    .download-btn::before {
-      content: "";
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: inherit;
-      z-index: -1;
-      filter: blur(25px);
-      animation: rgb-glow 8s ease infinite;
-    }
+padding:12px 18px;
 
-    .download-btn.counting {
-      background: #1a1a1a !important;
-      border: 2px solid #ff00f7;
-      animation: pulse-border 1.5s infinite;
-      box-shadow: 0 0 15px #ff00f780;
-      pointer-events: none;
-      color: #ff00f7 !important;
-      text-shadow: 0 0 8px #ff00f7;
-    }
+background:rgba(6,6,12,.78);
+backdrop-filter:blur(18px);
 
-    .download-btn.counting::before {
-      display: none;
-    }
+border-bottom:1px solid var(--line);
 
-    @keyframes pulse-border {
-      0% { border-color: #ff00f7; box-shadow: 0 0 10px #ff00f750; }
-      50% { border-color: #00f7ff; box-shadow: 0 0 20px #00f7ff80; }
-      100% { border-color: #ff00f7; box-shadow: 0 0 10px #ff00f750; }
-    }
+box-shadow:0 8px 30px rgba(0,0,0,.35);
+}
 
-    .download-btn:not(.counting):hover {
-      transform: scale(1.03);
-      box-shadow: 0 0 25px #00f7ffcc;
-    }
+.nav{
+max-width:1280px;
+margin:auto;
 
-    .download-btn::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -75%;
-      width: 50%;
-      height: 100%;
-      background: rgba(255, 255, 255, 0.2);
-      transform: skewX(-25deg);
-      animation: shine 3s infinite;
-    }
+display:flex;
+align-items:center;
+justify-content:center;
+gap:15px;
+}
 
-    @keyframes rgb-glow {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+.logo{
+width:43px;
+height:43px;
 
-    @keyframes shine {
-      0% { left: -75%; }
-      50% { left: 125%; }
-      100% { left: 125%; }
-    }
+border-radius:13px;
 
-    /* حاوية الرسائل المنبثقة التفاعلية Toast */
-    #toast-container {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      z-index: 10000;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      pointer-events: none;
-    }
+display:grid;
+place-items:center;
 
-    .toast-notification {
-      background: rgba(18, 18, 18, 0.95);
-      border: 2px solid #00f7ff;
-      color: #fff;
-      padding: 12px 25px;
-      border-radius: 10px;
-      font-size: 15px;
-      font-weight: bold;
-      box-shadow: 0 0 15px #00f7ff80, inset 0 0 10px #00f7ff20;
-      text-shadow: 0 0 5px #fff;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 250px;
-      max-width: 350px;
-      transform: translateX(120%);
-      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s;
-      opacity: 0;
-      backdrop-filter: blur(5px);
-    }
+background:
+linear-gradient(135deg,var(--cyan),var(--purple));
 
-    .toast-notification.show {
-      transform: translateX(0);
-      opacity: 1;
-    }
+box-shadow:
+0 0 22px rgba(0,234,255,.30);
 
-    .toast-rating {
-      border-color: #ffcc00;
-      box-shadow: 0 0 15px #ffcc0080, inset 0 0 10px #ffcc0020;
-    }
+font-size:21px;
+}
 
-    /* الفوتر الفخم المطور للمنصة */
-    footer {
-      background-color: rgba(6, 5, 15, 0.9);
-      margin-top: 60px;
-      padding: 30px 20px;
-      text-align: center;
-      position: relative;
-      border-top: 2px solid #ff00f7;
-      box-shadow: 0 -5px 25px rgba(255, 0, 247, 0.15);
-      backdrop-filter: blur(10px);
-    }
+header h1{
+margin:0;
+font-size:22px;
+font-weight:900;
 
-    footer::before {
-      content: '';
-      position: absolute;
-      top: -2px;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, #ff00f7, #00f7ff, #ff00f7);
-      background-size: 200% 100%;
-      animation: rgb-glow 4s linear infinite;
-    }
+background:
+linear-gradient(90deg,#fff,var(--cyan),#d26bff);
 
-    .footer-content {
-      max-width: 600px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 15px;
-    }
+-webkit-background-clip:text;
+background-clip:text;
 
-    .footer-title {
-      font-size: 1.5em;
-      color: #fff;
-      text-shadow: 0 0 10px #ff00f7, 0 0 20px #ff00f7;
-      margin: 0;
-    }
+color:transparent;
+}
 
-    .social-links {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      margin: 10px 0;
-    }
 
-    .social-icon {
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-      background: #121212;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
+/* =========================
+   SEARCH
+========================= */
 
-    .social-icon.telegram:hover {
-      color: #0088cc;
-      border-color: #0088cc;
-      box-shadow: 0 0 15px rgba(0, 136, 204, 0.6);
-      transform: translateY(-3px);
-    }
+.search-box{
+max-width:1280px;
+margin:18px auto 5px;
+padding:0 20px;
+}
 
-    .footer-rights {
-      color: #777;
-      font-size: 13px;
-      margin: 0;
-      letter-spacing: 0.5px;
-    }
-    @media (max-width: 650px) {
-      .apps-container { grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 12px; }
-      .app-card { padding: 8px; border-radius: 15px; }
-      .app-card img { height: 140px; }
-      .app-card h2 { font-size: 1.15em; }
-      .download-btn { padding: 10px 8px; font-size: 15px; }
-    }
-    @media (max-width: 390px) { .apps-container { grid-template-columns: repeat(2, 1fr); } }
+.search-wrap{
+position:relative;
+}
 
-    .app-name-bar {
-      position: fixed;
-      top: 75px;
-      left: 12px;
-      right: 12px;
-      z-index: 10001;
-      background: rgba(18, 18, 18, 0.97);
-      color: #00f7ff;
-      border: 1px solid #00f7ff;
-      border-radius: 10px;
-      padding: 10px 14px;
-      text-align: center;
-      font-family: 'Cairo', sans-serif;
-      font-size: 15px;
-      font-weight: bold;
-      white-space: nowrap;
-      overflow-x: auto;
-      box-shadow: 0 0 18px #00f7ff70;
-      text-shadow: 0 0 6px #00f7ff;
-      opacity: 0;
-      transform: translateY(-10px);
-      transition: opacity .25s ease, transform .25s ease;
-      pointer-events: none;
-    }
+.search-wrap i{
+position:absolute;
+right:15px;
+top:50%;
+transform:translateY(-50%);
+color:#777;
+}
 
-    .app-name-bar.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
+#searchInput{
+width:100%;
 
-  </style>
+padding:13px 45px 13px 15px;
+
+border-radius:13px;
+
+border:1px solid var(--line);
+
+outline:none;
+
+background:rgba(13,13,23,.90);
+
+color:#fff;
+
+font-family:'Cairo',sans-serif;
+
+transition:.25s;
+}
+
+#searchInput:focus{
+border-color:var(--cyan);
+
+box-shadow:
+0 0 20px rgba(0,234,255,.12);
+}
+
+
+/* =========================
+   APPS GRID
+========================= */
+
+.apps-container{
+max-width:1280px;
+margin:auto;
+
+padding:18px 20px 40px;
+
+display:grid;
+
+grid-template-columns:
+repeat(4,1fr);
+
+gap:15px;
+}
+
+
+/* =========================
+   APP CARD
+========================= */
+
+.app-card{
+
+background:
+linear-gradient(
+160deg,
+rgba(20,20,33,.94),
+rgba(10,10,17,.97)
+);
+
+border:1px solid var(--line);
+
+border-radius:18px;
+
+padding:10px;
+
+position:relative;
+
+overflow:hidden;
+
+box-shadow:
+0 10px 30px rgba(0,0,0,.25);
+
+transition:.3s;
+
+animation:cardIn .55s both;
+}
+
+@keyframes cardIn{
+
+from{
+opacity:0;
+transform:translateY(18px);
+}
+
+to{
+opacity:1;
+transform:none;
+}
+
+}
+
+.app-card:hover{
+
+transform:translateY(-5px);
+
+border-color:
+rgba(0,234,255,.30);
+
+box-shadow:
+0 18px 40px rgba(0,0,0,.40),
+0 0 25px rgba(0,234,255,.08);
+}
+
+.app-card.hidden{
+display:none!important;
+}
+
+
+/* =========================
+   APP IMAGE
+========================= */
+
+.img-container{
+
+width:100%;
+height:165px;
+
+border-radius:12px;
+
+overflow:hidden;
+
+margin-bottom:11px;
+
+border:1px solid rgba(255,255,255,.07);
+
+transition:.3s;
+}
+
+.img-container img{
+
+width:100%;
+height:100%;
+
+object-fit:cover;
+
+display:block;
+
+transition:.4s;
+}
+
+.app-card:hover img{
+
+transform:scale(1.06);
+
+filter:brightness(1.08);
+}
+
+.app-card:hover .img-container{
+
+border-color:
+rgba(0,234,255,.45);
+
+box-shadow:
+0 0 20px rgba(0,234,255,.12);
+}
+
+
+/* =========================
+   APP TITLE
+========================= */
+
+.app-card h2{
+
+margin:11px 3px 12px;
+
+font-size:15px;
+
+font-weight:900;
+
+color:#fff;
+
+text-align:right;
+
+white-space:nowrap;
+
+overflow:hidden;
+
+text-overflow:ellipsis;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.card-actions{
+
+display:flex;
+
+gap:8px;
+
+align-items:center;
+
+justify-content:center;
+
+margin-top:8px;
+}
+
+.download-btn{
+
+position:relative;
+
+overflow:hidden;
+
+display:block;
+
+flex:1;
+
+padding:10px 12px;
+
+border-radius:11px;
+
+text-align:center;
+
+text-decoration:none;
+
+font-family:'Cairo',sans-serif;
+
+font-size:13px;
+
+font-weight:900;
+
+color:#061016;
+
+background:
+linear-gradient(
+135deg,
+var(--cyan),
+#765cff
+);
+
+box-shadow:
+0 7px 20px rgba(0,234,255,.13);
+
+transition:.25s;
+
+cursor:pointer;
+}
+
+.download-btn::after{
+
+content:"";
+
+position:absolute;
+
+top:0;
+left:-80%;
+
+width:45%;
+height:100%;
+
+background:rgba(255,255,255,.25);
+
+transform:skewX(-25deg);
+
+animation:shine 3s infinite;
+}
+
+@keyframes shine{
+
+0%{
+left:-80%;
+}
+
+50%{
+left:130%;
+}
+
+100%{
+left:130%;
+}
+
+}
+
+.download-btn:hover{
+
+transform:translateY(-2px);
+
+box-shadow:
+0 10px 25px rgba(0,234,255,.25);
+}
+
+
+/* =========================
+   COUNTDOWN
+========================= */
+
+.download-btn.counting{
+
+background:#151520!important;
+
+color:var(--cyan)!important;
+
+border:1px solid var(--cyan);
+
+animation:pulse 1.3s infinite;
+
+pointer-events:none;
+}
+
+@keyframes pulse{
+
+50%{
+box-shadow:
+0 0 20px rgba(0,234,255,.35);
+}
+
+}
+
+
+/* =========================
+   TOAST
+========================= */
+
+#toast-container{
+
+position:fixed;
+
+bottom:22px;
+right:20px;
+
+z-index:10000;
+
+display:flex;
+
+flex-direction:column;
+
+gap:9px;
+
+pointer-events:none;
+}
+
+.toast-notification{
+
+min-width:250px;
+max-width:350px;
+
+padding:12px 16px;
+
+border-radius:13px;
+
+background:rgba(14,14,24,.95);
+
+border:1px solid var(--cyan);
+
+box-shadow:
+0 12px 35px rgba(0,0,0,.40);
+
+backdrop-filter:blur(14px);
+
+font-size:13px;
+
+font-weight:700;
+
+transform:translateX(120%);
+
+opacity:0;
+
+transition:.35s;
+}
+
+.toast-notification.show{
+
+transform:translateX(0);
+
+opacity:1;
+}
+
+
+/* =========================
+   TELEGRAM
+========================= */
+
+.telegram-float{
+
+position:fixed;
+
+bottom:20px;
+left:20px;
+
+z-index:1000;
+
+width:50px;
+height:50px;
+
+border-radius:50%;
+
+display:grid;
+place-items:center;
+
+background:#151522;
+
+border:1px solid var(--cyan);
+
+box-shadow:
+0 0 20px rgba(0,234,255,.25);
+
+transition:.25s;
+}
+
+.telegram-float:hover{
+
+transform:
+translateY(-4px)
+scale(1.05);
+
+box-shadow:
+0 0 28px rgba(0,234,255,.45);
+}
+
+.telegram-float img{
+
+width:34px;
+height:34px;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+
+margin-top:20px;
+
+padding:38px 20px;
+
+text-align:center;
+
+background:#06060c;
+
+border-top:
+1px solid rgba(0,234,255,.15);
+
+box-shadow:
+0 -10px 35px rgba(0,0,0,.25);
+}
+
+.footer-content{
+
+max-width:600px;
+
+margin:auto;
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+gap:15px;
+}
+
+.footer-title{
+
+margin:0;
+
+font-size:22px;
+
+font-weight:900;
+
+background:
+linear-gradient(
+90deg,
+#fff,
+var(--cyan),
+#d26bff
+);
+
+-webkit-background-clip:text;
+background-clip:text;
+
+color:transparent;
+}
+
+.social-links{
+
+display:flex;
+
+gap:12px;
+}
+
+.social-icon{
+
+width:45px;
+height:45px;
+
+border-radius:13px;
+
+display:grid;
+place-items:center;
+
+background:
+rgba(255,255,255,.04);
+
+border:1px solid var(--line);
+
+color:#fff;
+
+text-decoration:none;
+
+font-size:19px;
+
+transition:.25s;
+}
+
+.social-icon:hover{
+
+transform:translateY(-3px);
+
+border-color:var(--cyan);
+
+box-shadow:
+0 0 18px rgba(0,234,255,.18);
+}
+
+.footer-rights{
+
+margin:0;
+
+color:#5f6170;
+
+font-size:12px;
+}
+
+
+/* =========================
+   NO RESULTS
+========================= */
+
+.no-results{
+
+display:none;
+
+grid-column:1/-1;
+
+text-align:center;
+
+padding:50px 20px;
+
+color:#777;
+
+font-size:16px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1000px){
+
+.apps-container{
+grid-template-columns:
+repeat(3,1fr);
+}
+
+}
+
+@media(max-width:700px){
+
+header{
+padding:10px 12px;
+}
+
+header h1{
+font-size:19px;
+}
+
+.logo{
+width:40px;
+height:40px;
+}
+
+.search-box{
+padding:0 12px;
+margin-top:13px;
+}
+
+.apps-container{
+
+grid-template-columns:
+repeat(2,1fr);
+
+gap:9px;
+
+padding:12px;
+}
+
+.app-card{
+
+padding:8px;
+
+border-radius:14px;
+}
+
+.img-container{
+
+height:130px;
+
+border-radius:10px;
+}
+
+.app-card h2{
+font-size:13px;
+}
+
+.download-btn{
+
+font-size:12px;
+
+padding:9px 7px;
+}
+
+.telegram-float{
+
+width:46px;
+height:46px;
+
+bottom:15px;
+
+left:15px;
+}
+
+}
+
+@media(max-width:390px){
+
+.img-container{
+height:112px;
+}
+
+.app-card h2{
+font-size:12px;
+}
+
+}
+
+</style>
+
 </head>
+
+
 <body>
 
-  <div id="toast-container"></div>
 
-  <header>
-    <div style="display: flex; align-items: center; gap: 15px;">
-      <input id="searchInput" type="text" placeholder="ابحث عن تطبيق..." />
-      <h1>مصطفى جيمرز</h1>
-    </div>
-  </header>
-
-  <main class="apps-container">
-
-     <div class="app-card" data-category="streaming">
-      <img src="images/bs.jpg" alt="Netflix" />
-      <h2>GAMEBAE</h2>
-      <div class="card-actions">
-        <a class="download-btn" href="https://modsfire.com/H0S4FLTL04ez4Zx" onclick="startDownload(event, this)">تحميل</a>
-      </div>
-    </div>
+<div id="toast-container"></div>
 
 
-    <div class="app-card" data-category="streaming">
-      <img src="images/net.jpg" alt="Netflix" />
-      <h2>Netflix</h2>
-      <div class="card-actions">
-        <a class="download-btn" href="https://modsfire.com/zmtl5r4j424vuqS" onclick="startDownload(event, this)">تحميل</a>
-      </div>
-    </div>
+<!-- HEADER -->
 
-    <div class="app-card" data-category="emulators">
-      <img src="images/pspaoc.jpg" alt="PSP AOCLUB" />
-      <h2>PSP AOCLUB</h2>
-      <div class="card-actions">
-        <a class="download-btn" href="https://modsfire.com/0w0xRn9WAUV1fta" onclick="startDownload(event, this)">تحميل</a>
-      </div>
-    </div>
+<header>
 
-    <div class="app-card" data-category="streaming">
-      <img src="images/mb.jpg" alt="moviebox" />
-      <h2>moviebox</h2>
-      <div class="card-actions">
-        <a class="download-btn" href="https://modsfire.com/ht6bS8G14ufM4V0" onclick="startDownload(event, this)">تحميل</a>
-      </div>
-    </div>
-    
-    <div class="app-card" data-category="emulators">
-      <img src="images/ps1aoc.jpg" alt="PS1 AOCLUB" />
-      <h2>PS1 AOCLUB</h2>
-      <div class="card-actions">
-        <a class="download-btn" href="https://modsfire.com/t8fn1OAJEJ0uU1f" onclick="startDownload(event, this)">تحميل</a>
-      </div>
-    </div>
+<div class="nav">
 
-    <div class="app-card" data-category="emulators">
-      <img src="images/ps2aocc.jpg" alt="ps2aoclub" />
-      <h2>ps2aoclub</h2>
-      <div class="card-actions">
-        <a class="download-btn" href="https://modsfire.com/2Sa827UI3851LjP" onclick="startDownload(event, this)">تحميل</a>
-      </div>
-    </div>
-    
-    <div class="app-card" data-category="emulators">
-      <img src="images/xg.jpg" alt="XGAMES" />
-      <h2>XGAMES</h2>
-      <div class="card-actions">
-        <a class="download-btn" href="https://modsfire.com/1cxl1wuhI46S98n" onclick="startDownload(event, this)">تحميل</a>
-      </div>
-    </div>
-     
-  </main>
+<div class="logo">
 
-  <a href="https://t.me/mustafaGWZ" target="_blank" style="
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    background-color: transparent;
-    padding: 0;
-    border-radius: 50%;
-    text-align: center;
-    text-decoration: none;
-    z-index: 1000;
-  " title="تابعني على التليجرام">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" style="width:48px;height:48px;box-shadow: 0 0 15px #00f7ff80;border-radius: 50%;" />
-  </a>
+<i class="fa-solid fa-gamepad"></i>
 
-  <footer>
-    <div class="footer-content">
-      <p class="footer-title">مصطفى جيمرز</p>
-      <div class="social-links">
-        <a href="https://t.me/mustafaGWZ" target="_blank" class="social-icon telegram">
-          <i class="fab fa-telegram-plane"></i>
-        </a>
-      </div>
-      <p class="footer-rights">جميع الحقوق محفوظة © 2026</p>
-    </div>
-  </footer>
+</div>
 
-  <script>
+<h1>مصطفى جيمرز</h1>
 
-    const searchInput = document.getElementById('searchInput');
-    searchInput.addEventListener('input', applyFilter);
+</div>
 
-    function applyFilter() {
-      const query = searchInput.value.toLowerCase();
-      const appCards = document.querySelectorAll('.app-card');
-
-      appCards.forEach(card => {
-        const title = card.querySelector('h2').textContent.toLowerCase();
-        const matchesSearch = title.includes(query);
-
-        if (matchesSearch) {
-          card.classList.remove('hidden');
-        } else {
-          card.classList.add('hidden');
-        }
-      });
-    }
-
-    // نظام الإشعارات المنبثقة الـ Toast للتطبيقات
-    function showToast(message, isRating = false) {
-      const container = document.getElementById('toast-container');
-      const toast = document.createElement('div');
-      toast.className = 'toast-notification';
-      if(isRating) {
-        toast.classList.add('toast-rating');
-      }
-      toast.innerHTML = message;
-      container.appendChild(toast);
-
-      setTimeout(() => {
-        toast.classList.add('show');
-      }, 50);
-
-      setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => {
-          toast.remove();
-        }, 400);
-      }, 3000);
-    }
+</header>
 
 
-    // إظهار الاسم الكامل للتطبيق عند لمس الاسم إذا كان أطول من المساحة المتاحة
-    document.querySelectorAll('.app-card h2').forEach(title => {
-      title.addEventListener('click', () => {
-        const isTruncated = title.scrollWidth > title.clientWidth;
-        if (!isTruncated) return;
+<!-- SEARCH -->
 
-        document.querySelectorAll('.app-name-bar').forEach(bar => bar.remove());
+<div class="search-box">
 
-        const bar = document.createElement('div');
-        bar.className = 'app-name-bar';
-        bar.textContent = title.textContent;
-        document.body.appendChild(bar);
+<div class="search-wrap">
 
-        requestAnimationFrame(() => bar.classList.add('show'));
+<i class="fa-solid fa-magnifying-glass"></i>
 
-        setTimeout(() => {
-          bar.classList.remove('show');
-          setTimeout(() => bar.remove(), 250);
-        }, 2500);
-      });
-    });
+<input
+id="searchInput"
+type="text"
+placeholder="ابحث عن تطبيق..."
+autocomplete="off"
+>
 
-    // العداد التنازلي المطور عند تحميل التطبيقات
-    function startDownload(event, element) {
-      event.preventDefault(); 
-      
-      const targetUrl = element.getAttribute('href');
-      const appTitle = element.parentElement.parentElement.querySelector('h2').textContent;
-      let timeLeft = 3; 
-      
-      element.classList.add('counting');
-      element.textContent = `تجهيز.. (${timeLeft})`;
-      
-      showToast(`🛡️ جاري تجهيز رابط آمن للملف: <br><span style="color:#00f7ff">${appTitle}</span>`);
+</div>
 
-      const countdown = setInterval(() => {
-        timeLeft--;
-        if (timeLeft <= 0) {
-          clearInterval(countdown);
-          element.classList.remove('counting');
-          element.textContent = 'تحميل';
-          window.open(targetUrl, '_blank'); 
-        } else {
-          element.textContent = `تجهيز.. (${timeLeft})`;
-        }
-      }, 1000);
-    }
-  </script>
+</div>
+
+
+<!-- APPLICATIONS -->
+
+<main class="apps-container">
+
+
+<!-- GAMEBAE -->
+
+<div class="app-card">
+
+<div class="img-container">
+
+<img
+src="images/bs.jpg"
+alt="GAMEBAE"
+>
+
+</div>
+
+<h2>GAMEBAE</h2>
+
+<div class="card-actions">
+
+<a
+class="download-btn"
+href="https://modsfire.com/H0S4FLTL04ez4Zx"
+onclick="startDownload(event,this)"
+>
+تحميل
+</a>
+
+</div>
+
+</div>
+
+
+<!-- NETFLIX -->
+
+<div class="app-card">
+
+<div class="img-container">
+
+<img
+src="images/net.jpg"
+alt="Netflix"
+>
+
+</div>
+
+<h2>Netflix</h2>
+
+<div class="card-actions">
+
+<a
+class="download-btn"
+href="https://modsfire.com/zmtl5r4j424vuqS"
+onclick="startDownload(event,this)"
+>
+تحميل
+</a>
+
+</div>
+
+</div>
+
+
+<!-- PSP AOCLUB -->
+
+<div class="app-card">
+
+<div class="img-container">
+
+<img
+src="images/pspaoc.jpg"
+alt="PSP AOCLUB"
+>
+
+</div>
+
+<h2>PSP AOCLUB</h2>
+
+<div class="card-actions">
+
+<a
+class="download-btn"
+href="https://modsfire.com/0w0xRn9WAUV1fta"
+onclick="startDownload(event,this)"
+>
+تحميل
+</a>
+
+</div>
+
+</div>
+
+
+<!-- MOVIEBOX -->
+
+<div class="app-card">
+
+<div class="img-container">
+
+<img
+src="images/mb.jpg"
+alt="moviebox"
+>
+
+</div>
+
+<h2>moviebox</h2>
+
+<div class="card-actions">
+
+<a
+class="download-btn"
+href="https://modsfire.com/ht6bS8G14ufM4V0"
+onclick="startDownload(event,this)"
+>
+تحميل
+</a>
+
+</div>
+
+</div>
+
+
+<!-- PS1 AOCLUB -->
+
+<div class="app-card">
+
+<div class="img-container">
+
+<img
+src="images/ps1aoc.jpg"
+alt="PS1 AOCLUB"
+>
+
+</div>
+
+<h2>PS1 AOCLUB</h2>
+
+<div class="card-actions">
+
+<a
+class="download-btn"
+href="https://modsfire.com/t8fn1OAJEJ0uU1f"
+onclick="startDownload(event,this)"
+>
+تحميل
+</a>
+
+</div>
+
+</div>
+
+
+<!-- PS2 AOCLUB -->
+
+<div class="app-card">
+
+<div class="img-container">
+
+<img
+src="images/ps2aocc.jpg"
+alt="ps2aoclub"
+>
+
+</div>
+
+<h2>ps2aoclub</h2>
+
+<div class="card-actions">
+
+<a
+class="download-btn"
+href="https://modsfire.com/2Sa827UI3851LjP"
+onclick="startDownload(event,this)"
+>
+تحميل
+</a>
+
+</div>
+
+</div>
+
+
+<!-- XGAMES -->
+
+<div class="app-card">
+
+<div class="img-container">
+
+<img
+src="images/xg.jpg"
+alt="XGAMES"
+>
+
+</div>
+
+<h2>XGAMES</h2>
+
+<div class="card-actions">
+
+<a
+class="download-btn"
+href="https://modsfire.com/1cxl1wuhI46S98n"
+onclick="startDownload(event,this)"
+>
+تحميل
+</a>
+
+</div>
+
+</div>
+
+
+<!-- NO RESULTS -->
+
+<div
+class="no-results"
+id="noResults"
+>
+
+<i
+class="fa-solid fa-mobile-screen-button"
+style="
+font-size:40px;
+margin-bottom:10px;
+color:#00eaff;
+"
+></i>
+
+<br>
+
+لم يتم العثور على التطبيق
+
+</div>
+
+
+</main>
+
+
+<!-- TELEGRAM -->
+
+<a
+href="https://t.me/mustafaGWZ"
+target="_blank"
+class="telegram-float"
+title="تابعني على التليجرام"
+>
+
+<img
+src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg"
+alt="Telegram"
+>
+
+</a>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+<div class="footer-content">
+
+<p class="footer-title">
+مصطفى جيمرز
+</p>
+
+<div class="social-links">
+
+<a
+href="https://t.me/mustafaGWZ"
+target="_blank"
+class="social-icon"
+>
+
+<i class="fab fa-telegram-plane"></i>
+
+</a>
+
+</div>
+
+<p class="footer-rights">
+جميع الحقوق محفوظة © 2026
+</p>
+
+</div>
+
+</footer>
+
+
+<script>
+
+
+/* =========================
+   SEARCH
+========================= */
+
+const searchInput =
+document.getElementById(
+"searchInput"
+);
+
+const noResults =
+document.getElementById(
+"noResults"
+);
+
+
+searchInput.addEventListener(
+"input",
+function(){
+
+const query =
+this.value
+.toLowerCase()
+.trim();
+
+let visible=0;
+
+
+document
+.querySelectorAll(
+".app-card"
+)
+.forEach(card=>{
+
+const title =
+card
+.querySelector("h2")
+.textContent
+.toLowerCase();
+
+
+if(title.includes(query)){
+
+card.classList.remove(
+"hidden"
+);
+
+visible++;
+
+}else{
+
+card.classList.add(
+"hidden"
+);
+
+}
+
+});
+
+
+if(visible===0){
+
+noResults.style.display=
+"block";
+
+}else{
+
+noResults.style.display=
+"none";
+
+}
+
+});
+
+
+/* =========================
+   TOAST
+========================= */
+
+function showToast(message){
+
+const container =
+document.getElementById(
+"toast-container"
+);
+
+const toast =
+document.createElement(
+"div"
+);
+
+toast.className =
+"toast-notification";
+
+toast.innerHTML =
+message;
+
+container.appendChild(
+toast
+);
+
+
+setTimeout(()=>{
+
+toast.classList.add(
+"show"
+);
+
+},50);
+
+
+setTimeout(()=>{
+
+toast.classList.remove(
+"show"
+);
+
+setTimeout(()=>{
+
+toast.remove();
+
+},400);
+
+},3000);
+
+}
+
+
+/* =========================
+   DOWNLOAD
+========================= */
+
+function startDownload(
+event,
+element
+){
+
+event.preventDefault();
+
+
+if(
+element.classList.contains(
+"counting"
+)
+)return;
+
+
+const targetUrl =
+element.getAttribute(
+"href"
+);
+
+
+const card =
+element.closest(
+".app-card"
+);
+
+
+const appTitle =
+card
+.querySelector("h2")
+.textContent
+.trim();
+
+
+let timeLeft=3;
+
+
+element.classList.add(
+"counting"
+);
+
+
+element.textContent =
+`تجهيز.. (${timeLeft})`;
+
+
+showToast(
+
+`🛡️ جاري تجهيز رابط التحميل:
+<br>
+
+<span style="color:#00eaff">
+
+${appTitle}
+
+</span>`
+
+);
+
+
+const countdown =
+setInterval(()=>{
+
+timeLeft--;
+
+
+if(timeLeft<=0){
+
+clearInterval(
+countdown
+);
+
+
+element.classList.remove(
+"counting"
+);
+
+
+element.textContent=
+"تحميل";
+
+
+window.open(
+targetUrl,
+"_blank"
+);
+
+}else{
+
+element.textContent =
+`تجهيز.. (${timeLeft})`;
+
+}
+
+},1000);
+
+}
+
+</script>
+
+
 </body>
+
 </html>
