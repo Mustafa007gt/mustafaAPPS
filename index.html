@@ -64,53 +64,16 @@
     }
 
     /* حاوية أزرار التصنيفات النيونية المخصصة للتطبيقات */
-    .categories-container {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      padding: 20px;
-      flex-wrap: wrap;
+
+        .apps-container {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;
+      padding: 15px; max-width: 1200px; margin: 0 auto;
     }
 
-    .category-btn {
-      background: #121212dd;
-      color: #fff;
-      border: 1px solid #00f7ff50;
-      padding: 8px 20px;
-      font-family: 'Cairo', sans-serif;
-      font-size: 15px;
-      font-weight: bold;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 10px #00f7ff20;
-    }
-
-    .category-btn.active, .category-btn:hover {
-      background: linear-gradient(90deg, #00f7ff, #ff00f7);
-      border-color: transparent;
-      box-shadow: 0 0 15px #00f7ff80;
-      transform: translateY(-2px);
-    }
-
-    .apps-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 25px;
-      padding: 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .app-card {
-      background: #121212dd;
-      border-radius: 16px;
-      padding: 20px;
-      text-align: center;
-      box-shadow: 0 0 20px #00f7ff30;
-      transition: transform 0.3s, box-shadow 0.3s;
-      position: relative;
-      overflow: hidden;
+        .app-card {
+      background: #121212dd; border-radius: 16px; padding: 10px; text-align: center;
+      box-shadow: 0 0 20px #00f7ff30; transition: transform .3s, box-shadow .3s;
+      position: relative; overflow: hidden;
     }
 
     .app-card.hidden {
@@ -122,55 +85,35 @@
       box-shadow: 0 0 25px #00f7ff80;
     }
 
-    .app-card img {
-      max-width: 100%;
-      border-radius: 10px;
-      margin-bottom: 15px;
-      transition: transform 0.4s ease;
+        .app-card img {
+      width: 100%; height: 140px; object-fit: cover; border-radius: 10px;
+      margin-bottom: 15px; transition: transform .4s ease; border: 1px solid #00f7ff20;
     }
 
     .app-card:hover img {
       transform: scale(1.04);
     }
-
     .app-card h2 {
       color: #00f7ff;
       text-shadow: 0 0 5px #00f7ff;
       margin: 10px 0 5px 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .app-card h2:active {
+      overflow: visible;
+      white-space: nowrap;
+      z-index: 20;
     }
 
     /* نظام النجمات المضيئة المعزولة للتطبيقات */
-    .rating-stars {
-      display: flex;
-      justify-content: center;
-      gap: 5px;
-      margin-bottom: 10px;
-      flex-direction: row-reverse; 
-    }
-
-    .rating-stars span {
-      font-size: 22px;
-      color: #444;
-      cursor: pointer;
-      transition: color 0.2s, transform 0.1s;
-    }
-
-    .rating-stars span:hover,
-    .rating-stars span:hover ~ span,
-    .rating-stars span.active,
-    .rating-stars span.active ~ span {
-      color: #ffcc00 !important;
-      text-shadow: 0 0 10px #ffcc00;
-    }
 
     .rating-stars span:hover {
       transform: scale(1.2);
-    }
-
-    .app-card p {
-      color: #ccc;
-      font-size: 14px;
-      margin-bottom: 15px;
     }
 
     /* حاوية الأزرار السفلى المحدثة لزر التحميل الكامل */
@@ -373,13 +316,6 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .social-icon.youtube:hover {
-      color: #ff0000;
-      border-color: #ff0000;
-      box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
-      transform: translateY(-3px);
-    }
-
     .social-icon.telegram:hover {
       color: #0088cc;
       border-color: #0088cc;
@@ -393,6 +329,45 @@
       margin: 0;
       letter-spacing: 0.5px;
     }
+    @media (max-width: 650px) {
+      .apps-container { grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 12px; }
+      .app-card { padding: 8px; border-radius: 15px; }
+      .app-card img { height: 140px; }
+      .app-card h2 { font-size: 1.15em; }
+      .download-btn { padding: 10px 8px; font-size: 15px; }
+    }
+    @media (max-width: 390px) { .apps-container { grid-template-columns: repeat(2, 1fr); } }
+
+    .app-name-bar {
+      position: fixed;
+      top: 75px;
+      left: 12px;
+      right: 12px;
+      z-index: 10001;
+      background: rgba(18, 18, 18, 0.97);
+      color: #00f7ff;
+      border: 1px solid #00f7ff;
+      border-radius: 10px;
+      padding: 10px 14px;
+      text-align: center;
+      font-family: 'Cairo', sans-serif;
+      font-size: 15px;
+      font-weight: bold;
+      white-space: nowrap;
+      overflow-x: auto;
+      box-shadow: 0 0 18px #00f7ff70;
+      text-shadow: 0 0 6px #00f7ff;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity .25s ease, transform .25s ease;
+      pointer-events: none;
+    }
+
+    .app-name-bar.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
   </style>
 </head>
 <body>
@@ -406,20 +381,11 @@
     </div>
   </header>
 
-  <div class="categories-container">
-    <button class="category-btn active" onclick="filterCategory('all')">الكل</button>
-    <button class="category-btn" onclick="filterCategory('streaming')">منصات ومشاهَدة</button>
-    <button class="category-btn" onclick="filterCategory('emulators')">محاكاة ومكتبات</button>
-    <button class="category-btn" onclick="filterCategory('tools')">تطبيقات منوعة</button>
-  </div>
-
   <main class="apps-container">
 
      <div class="app-card" data-category="streaming">
       <img src="images/bs.jpg" alt="Netflix" />
       <h2>GAMEBAE</h2>
-      <div class="rating-stars" data-stars="5"><span data-value="5">★</span><span data-value="4">★</span><span data-value="3">★</span><span data-value="2">★</span><span data-value="1">★</span></div>
-      <p>مكتبة العاب كلاسيكية بين يديك</p>
       <div class="card-actions">
         <a class="download-btn" href="https://modsfire.com/H0S4FLTL04ez4Zx" onclick="startDownload(event, this)">تحميل</a>
       </div>
@@ -429,8 +395,6 @@
     <div class="app-card" data-category="streaming">
       <img src="images/net.jpg" alt="Netflix" />
       <h2>Netflix</h2>
-      <div class="rating-stars" data-stars="5"><span data-value="5">★</span><span data-value="4">★</span><span data-value="3">★</span><span data-value="2">★</span><span data-value="1">★</span></div>
-      <p>التطبيق الاكثر شهرة في العالم</p>
       <div class="card-actions">
         <a class="download-btn" href="https://modsfire.com/zmtl5r4j424vuqS" onclick="startDownload(event, this)">تحميل</a>
       </div>
@@ -439,8 +403,6 @@
     <div class="app-card" data-category="emulators">
       <img src="images/pspaoc.jpg" alt="PSP AOCLUB" />
       <h2>PSP AOCLUB</h2>
-      <div class="rating-stars" data-stars="5"><span data-value="5">★</span><span data-value="4">★</span><span data-value="3">★</span><span data-value="2">★</span><span data-value="1">★</span></div>
-      <p>يحتوي على اكثر من 700 لعبة psp</p>
       <div class="card-actions">
         <a class="download-btn" href="https://modsfire.com/0w0xRn9WAUV1fta" onclick="startDownload(event, this)">تحميل</a>
       </div>
@@ -449,8 +411,6 @@
     <div class="app-card" data-category="streaming">
       <img src="images/mb.jpg" alt="moviebox" />
       <h2>moviebox</h2>
-      <div class="rating-stars" data-stars="5"><span data-value="5">★</span><span data-value="4">★</span><span data-value="3">★</span><span data-value="2">★</span><span data-value="1">★</span></div>
-      <p>التطبيق رقم 1 عالميا لمشاهدة الأفلام</p>
       <div class="card-actions">
         <a class="download-btn" href="https://modsfire.com/ht6bS8G14ufM4V0" onclick="startDownload(event, this)">تحميل</a>
       </div>
@@ -459,8 +419,6 @@
     <div class="app-card" data-category="emulators">
       <img src="images/ps1aoc.jpg" alt="PS1 AOCLUB" />
       <h2>PS1 AOCLUB</h2>
-      <div class="rating-stars" data-stars="5"><span data-value="5">★</span><span data-value="4">★</span><span data-value="3">★</span><span data-value="2">★</span><span data-value="1">★</span></div>
-      <p>يحتوي على اكثر من 1500 لعبة ps1</p>
       <div class="card-actions">
         <a class="download-btn" href="https://modsfire.com/t8fn1OAJEJ0uU1f" onclick="startDownload(event, this)">تحميل</a>
       </div>
@@ -469,8 +427,6 @@
     <div class="app-card" data-category="emulators">
       <img src="images/ps2aocc.jpg" alt="ps2aoclub" />
       <h2>ps2aoclub</h2>
-      <div class="rating-stars" data-stars="5"><span data-value="5">★</span><span data-value="4">★</span><span data-value="3">★</span><span data-value="2">★</span><span data-value="1">★</span></div>
-      <p>تطبيق يحتوي على 100 لعبة PS2 يمكنك تنزيلها ولعبها مباشرة داخل التطبيق</p>
       <div class="card-actions">
         <a class="download-btn" href="https://modsfire.com/2Sa827UI3851LjP" onclick="startDownload(event, this)">تحميل</a>
       </div>
@@ -479,8 +435,6 @@
     <div class="app-card" data-category="emulators">
       <img src="images/xg.jpg" alt="XGAMES" />
       <h2>XGAMES</h2>
-      <div class="rating-stars" data-stars="5"><span data-value="5">★</span><span data-value="4">★</span><span data-value="3">★</span><span data-value="2">★</span><span data-value="1">★</span></div>
-      <p>يمكنك بهذا التطبيق تحميل العاب بي اس بي و سوني 2 بكل سهولة وبدون تعب وهذه نسخة بدون اعلانات</p>
       <div class="card-actions">
         <a class="download-btn" href="https://modsfire.com/1cxl1wuhI46S98n" onclick="startDownload(event, this)">تحميل</a>
       </div>
@@ -506,9 +460,6 @@
     <div class="footer-content">
       <p class="footer-title">مصطفى جيمرز</p>
       <div class="social-links">
-        <a href="https://youtube.com/@mustafqaz007?si=EeTdNeDu7BtfXPnv" target="_blank" class="social-icon youtube">
-          <i class="fab fa-youtube"></i>
-        </a>
         <a href="https://t.me/mustafaGWZ" target="_blank" class="social-icon telegram">
           <i class="fab fa-telegram-plane"></i>
         </a>
@@ -518,17 +469,6 @@
   </footer>
 
   <script>
-    let currentCategory = 'all';
-
-    function filterCategory(category) {
-      currentCategory = category;
-      const buttons = document.querySelectorAll('.category-btn');
-      buttons.forEach(btn => btn.classList.remove('active'));
-      if(window.event && window.event.target) {
-        window.event.target.classList.add('active');
-      }
-      applyFilter();
-    }
 
     const searchInput = document.getElementById('searchInput');
     searchInput.addEventListener('input', applyFilter);
@@ -539,13 +479,9 @@
 
       appCards.forEach(card => {
         const title = card.querySelector('h2').textContent.toLowerCase();
-        const description = card.querySelector('p').textContent.toLowerCase();
-        const cardCategory = card.getAttribute('data-category');
+        const matchesSearch = title.includes(query);
 
-        const matchesSearch = title.includes(query) || description.includes(query);
-        const matchesCategory = currentCategory === 'all' || cardCategory === currentCategory;
-
-        if (matchesSearch && matchesCategory) {
+        if (matchesSearch) {
           card.classList.remove('hidden');
         } else {
           card.classList.add('hidden');
@@ -576,6 +512,29 @@
       }, 3000);
     }
 
+
+    // إظهار الاسم الكامل للتطبيق عند لمس الاسم إذا كان أطول من المساحة المتاحة
+    document.querySelectorAll('.app-card h2').forEach(title => {
+      title.addEventListener('click', () => {
+        const isTruncated = title.scrollWidth > title.clientWidth;
+        if (!isTruncated) return;
+
+        document.querySelectorAll('.app-name-bar').forEach(bar => bar.remove());
+
+        const bar = document.createElement('div');
+        bar.className = 'app-name-bar';
+        bar.textContent = title.textContent;
+        document.body.appendChild(bar);
+
+        requestAnimationFrame(() => bar.classList.add('show'));
+
+        setTimeout(() => {
+          bar.classList.remove('show');
+          setTimeout(() => bar.remove(), 250);
+        }, 2500);
+      });
+    });
+
     // العداد التنازلي المطور عند تحميل التطبيقات
     function startDownload(event, element) {
       event.preventDefault(); 
@@ -601,40 +560,6 @@
         }
       }, 1000);
     }
-
-    // ربط تقييم النجمات المضيئة لكل كرت تطبيق على حدة
-    document.querySelectorAll('.rating-stars').forEach(container => {
-      const defaultStars = parseInt(container.getAttribute('data-stars')) || 5;
-      const stars = container.querySelectorAll('span');
-      
-      const setStarsValue = (val) => {
-        stars.forEach(star => {
-          const starValue = parseInt(star.getAttribute('data-value'));
-          if (starValue <= val) {
-            star.classList.add('active');
-          } else {
-            star.classList.remove('active');
-          }
-        });
-      };
-
-      setStarsValue(defaultStars);
-
-      stars.forEach(star => {
-        star.addEventListener('click', (e) => {
-          e.stopPropagation(); 
-          const clickedValue = parseInt(star.getAttribute('data-value'));
-          
-          const card = container.closest('.app-card');
-          const appTitle = card ? card.querySelector('h2').textContent : "التطبيق";
-          
-          container.setAttribute('data-stars', clickedValue);
-          setStarsValue(clickedValue);
-
-          showToast(`⭐ شكراً لتقييمك تطبيق <span style="color:#ffcc00">${appTitle}</span> بـ ${clickedValue} نجوم!`, true);
-        });
-      });
-    });
   </script>
 </body>
 </html>
